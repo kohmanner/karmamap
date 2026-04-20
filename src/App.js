@@ -36,6 +36,14 @@ const FORTUNE_SYSTEMS = [
 
 const GOALS = ["이직 / Job Change","창업 / Startup","승진 / Promotion","연봉협상 / Salary Negotiation","사업확장 / Business Expansion"];
 
+const MINHWA_COLORS = {
+  en: { sun:"#ff3cac", sunLight:"#ff80cc", sunDark:"#c0005a", point:"#ff3cac", btn:"linear-gradient(135deg,#ff3cac,#784ba0)" },
+  ko: { sun:"#c84b2f", sunLight:"#f5823a", sunDark:"#8b2010", point:"#d4a017", btn:"linear-gradient(135deg,#c84b2f,#8b2010)" },
+  zh: { sun:"#ff2a2a", sunLight:"#ff6060", sunDark:"#cc0000", point:"#ffd700", btn:"linear-gradient(135deg,#cc0000,#880000)" },
+  ms: { sun:"#00c896", sunLight:"#40dbb0", sunDark:"#006b50", point:"#ffd700", btn:"linear-gradient(135deg,#008f6a,#005a42)" },
+  in: { sun:"#ff8c00", sunLight:"#ffaa44", sunDark:"#cc5500", point:"#20b2aa", btn:"linear-gradient(135deg,#ff8c00,#cc6600)" },
+};
+
 const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
 
 const T = {
@@ -636,6 +644,8 @@ Be specific and strategic. No vague answers. Real career moves tied to timing wi
   });
 
   const p=theme.primary; const s=theme.secondary; const fn=theme.font;
+  const minhwaMode = step==="landing";
+  const mc = MINHWA_COLORS[lang] || MINHWA_COLORS.en;
   const css=`
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif+SC:wght@400;700&display=swap');
     *{box-sizing:border-box;margin:0;padding:0;}
@@ -697,6 +707,9 @@ Be specific and strategic. No vague answers. Real career moves tied to timing wi
     .reaction-btn.reacted{background:${p}22;border-color:${p};color:${theme.text};}
     .filter-toggle{background:transparent;border:1px solid ${theme.border};border-radius:20px;padding:5px 12px;cursor:pointer;font-size:12px;color:${theme.muted};transition:all 0.18s;font-family:${fn};}
     .filter-toggle.active{background:${p}22;border-color:${p};color:${p};}
+    @keyframes waveSlide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @keyframes craneGlide{0%,100%{transform:translate(0px,0px)}25%{transform:translate(38px,-18px)}50%{transform:translate(76px,7px)}75%{transform:translate(38px,-11px)}}
+    @keyframes minhwaSunPulse{0%,100%{filter:drop-shadow(0 0 16px ${mc.sun}b3)}50%{filter:drop-shadow(0 0 36px ${mc.sun}ff) drop-shadow(0 0 60px ${mc.point}80)}}
     @media print{
       body *{visibility:hidden;}
       #karmamap-result,#karmamap-result *{visibility:visible;}
@@ -705,19 +718,34 @@ Be specific and strategic. No vague answers. Real career moves tied to timing wi
   `;
 
   return (
-    <div style={{minHeight:"100vh",background:theme.bg,fontFamily:fn,color:theme.text,transition:"all 0.5s ease",position:"relative",overflow:"hidden"}}>
+    <div style={{minHeight:"100vh",background:minhwaMode?"linear-gradient(180deg,#c8e8f0 0%,#d8eef5 18%,#e8e0c4 55%,#f5e6c8 100%)":theme.bg,fontFamily:fn,color:minhwaMode?"#2d1810":theme.text,transition:"all 0.5s ease",position:"relative",overflow:"hidden"}}>
       <style>{css}</style>
 
       {/* ── Star particles ── */}
-      <canvas ref={starCanvasRef} style={{position:"fixed",inset:0,zIndex:1,pointerEvents:"none"}}/>
+      <canvas ref={starCanvasRef} style={{position:"fixed",inset:0,zIndex:1,pointerEvents:"none",display:minhwaMode?"none":"block"}}/>
 
       {/* ── Ambient orbs ── */}
-      <div style={{position:"fixed",top:-120,left:-120,width:500,height:500,background:step==="landing"?"#c84b2f":p,borderRadius:"50%",filter:"blur(140px)",opacity:step==="landing"?0.16:0.13,pointerEvents:"none",zIndex:1,animation:"orbDrift 18s ease-in-out infinite"}}/>
-      <div style={{position:"fixed",bottom:80,right:-100,width:380,height:380,background:step==="landing"?"#4a9e8a":s,borderRadius:"50%",filter:"blur(120px)",opacity:step==="landing"?0.14:0.11,pointerEvents:"none",zIndex:1,animation:"orbDrift 22s ease-in-out infinite reverse"}}/>
-      <div style={{position:"fixed",top:"40%",left:"60%",width:260,height:260,background:step==="landing"?"#d4a017":theme.accent,borderRadius:"50%",filter:"blur(110px)",opacity:step==="landing"?0.09:0.07,pointerEvents:"none",zIndex:1}}/>
+      {!minhwaMode && (<>
+        <div style={{position:"fixed",top:-120,left:-120,width:500,height:500,background:step==="landing"?"#c84b2f":p,borderRadius:"50%",filter:"blur(140px)",opacity:step==="landing"?0.16:0.13,pointerEvents:"none",zIndex:1,animation:"orbDrift 18s ease-in-out infinite"}}/>
+        <div style={{position:"fixed",bottom:80,right:-100,width:380,height:380,background:step==="landing"?"#4a9e8a":s,borderRadius:"50%",filter:"blur(120px)",opacity:step==="landing"?0.14:0.11,pointerEvents:"none",zIndex:1,animation:"orbDrift 22s ease-in-out infinite reverse"}}/>
+        <div style={{position:"fixed",top:"40%",left:"60%",width:260,height:260,background:step==="landing"?"#d4a017":theme.accent,borderRadius:"50%",filter:"blur(110px)",opacity:step==="landing"?0.09:0.07,pointerEvents:"none",zIndex:1}}/>
+      </>)}
 
       {/* ── Bottom decoration: Minhwa waves (landing) or Mountain (other) ── */}
-      {step==="landing" ? (
+      {minhwaMode ? (
+        <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:6,pointerEvents:"none",height:130,overflow:"hidden"}}>
+          <div style={{width:"200%",height:"100%",animation:"waveSlide 22s linear infinite"}}>
+            <svg viewBox="0 0 2880 130" preserveAspectRatio="none" style={{width:"100%",height:"100%",display:"block"}}>
+              <path d="M0,70 C140,44 240,62 380,52 C520,42 620,64 760,54 C900,44 1000,62 1140,52 C1280,42 1380,60 1520,50 C1660,40 1760,58 1920,48 L1920,130 L0,130 Z M1920,70 C2060,44 2160,62 2300,52 C2440,42 2540,64 2680,54 C2820,44 2880,60 2880,54 L2880,130 L1920,130 Z" fill="#2d6b5e" opacity="0.6"/>
+              <path d="M0,84 C110,64 190,80 310,70 C430,60 510,80 640,70 C770,60 855,78 980,68 C1105,58 1190,76 1320,66 C1450,56 1535,74 1660,64 C1785,54 1870,72 1920,65 L1920,130 L0,130 Z M1920,84 C2030,64 2110,80 2230,70 C2350,60 2430,80 2560,70 C2690,60 2775,78 2880,68 L2880,130 L1920,130 Z" fill="#3d8a78" opacity="0.75"/>
+              <path d="M0,97 C88,78 158,94 268,84 C378,74 452,96 572,86 C692,76 768,94 888,84 C1008,74 1082,92 1202,82 C1322,72 1396,90 1516,80 C1636,70 1710,88 1830,78 L1920,80 L1920,130 L0,130 Z M1920,97 C2008,78 2078,94 2188,84 C2298,74 2372,96 2492,86 C2612,76 2686,94 2806,84 L2880,82 L2880,130 L1920,130 Z" fill="#4a9e8a" opacity="0.90"/>
+              {Array.from({length:28},(_,i)=>(
+                <circle key={i} cx={i*104+52} cy={88-(i%3)*5} r="2.6" fill="white" opacity="0.4"/>
+              ))}
+            </svg>
+          </div>
+        </div>
+      ) : step==="landing" ? (
         <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:2,pointerEvents:"none",height:"36vh",minHeight:180}}>
           <svg viewBox="0 0 1440 260" preserveAspectRatio="none" style={{width:"100%",height:"100%",display:"block"}}>
             <defs>
@@ -782,103 +810,74 @@ Be specific and strategic. No vague answers. Real career moves tied to timing wi
         </div>
       )}
 
-      {/* ── Minhwa fixed decorations (landing only) ── */}
-      {step==="landing" && (<>
-        {/* 해 Sun — top left */}
-        <div style={{position:"fixed",top:44,left:44,zIndex:4,pointerEvents:"none",animation:"sunPulse 4s ease-in-out infinite"}}>
-          <svg width="88" height="88" viewBox="0 0 88 88">
-            <defs>
-              <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#f5823a"/>
-                <stop offset="60%" stopColor="#c84b2f"/>
-                <stop offset="100%" stopColor="#8b2010"/>
-              </radialGradient>
-            </defs>
-            {Array.from({length:16},(_,i)=>{
-              const a=(i*22.5)*Math.PI/180; const r1=34; const r2=i%2===0?44:40;
-              return <line key={i} x1={44+r1*Math.cos(a)} y1={44+r1*Math.sin(a)} x2={44+r2*Math.cos(a)} y2={44+r2*Math.sin(a)} stroke="#d4a017" strokeWidth={i%2===0?"2":"1.2"} opacity="0.7"/>;
-            })}
-            <circle cx="44" cy="44" r="30" fill="url(#sunGrad)" opacity="0.92"/>
-            <circle cx="44" cy="44" r="22" fill="#e05a30" opacity="0.5"/>
-            <circle cx="44" cy="44" r="28" fill="none" stroke="#d4a017" strokeWidth="1.5" opacity="0.5"/>
-            <circle cx="44" cy="44" r="18" fill="none" stroke="#f5823a" strokeWidth="0.8" opacity="0.4"/>
-          </svg>
+      {/* ── 민화 십장생 고정 배경 (all languages, landing only) ── */}
+      {minhwaMode && (<>
+        {/* 한지 grain texture */}
+        <svg style={{position:"fixed",inset:0,width:"100%",height:"100%",zIndex:2,pointerEvents:"none"}} xmlns="http://www.w3.org/2000/svg">
+          <filter id="hanjiNoise"><feTurbulence type="fractalNoise" baseFrequency="0.68" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer></filter>
+          <rect width="100%" height="100%" filter="url(#hanjiNoise)"/>
+        </svg>
+
+        {/* 달 Moon — top left */}
+        <div style={{position:"fixed",top:52,left:56,zIndex:4,pointerEvents:"none",animation:"moonFloat 8s ease-in-out infinite"}}>
+          <div style={{width:64,height:64,borderRadius:"50%",background:"radial-gradient(circle at 38% 35%,#fdfaf2 0%,#f0e8c8 60%,#e4d4a8 100%)",boxShadow:"0 0 28px rgba(240,232,200,0.85),0 0 56px rgba(240,220,180,0.3)",border:"1px solid rgba(212,160,23,0.35)"}}/>
         </div>
-        {/* 달 Moon — top right */}
-        <div style={{position:"fixed",top:44,right:44,zIndex:4,pointerEvents:"none",animation:"moonFloat 7s ease-in-out infinite"}}>
+
+        {/* 해 Sun — top right */}
+        <div style={{position:"fixed",top:46,right:62,zIndex:4,pointerEvents:"none",animation:"minhwaSunPulse 4s ease-in-out infinite"}}>
           <svg width="76" height="76" viewBox="0 0 76 76">
-            <defs>
-              <radialGradient id="moonGrad" cx="40%" cy="38%" r="55%">
-                <stop offset="0%" stopColor="#fdf4e0"/>
-                <stop offset="70%" stopColor="#f0deb8"/>
-                <stop offset="100%" stopColor="#c8b898"/>
-              </radialGradient>
-            </defs>
-            <circle cx="38" cy="38" r="30" fill="url(#moonGrad)" opacity="0.88"/>
-            <circle cx="28" cy="30" r="5" fill="#d4c4a0" opacity="0.35"/>
-            <circle cx="46" cy="44" r="3.5" fill="#c8b898" opacity="0.3"/>
-            <circle cx="32" cy="48" r="2.5" fill="#d4c4a0" opacity="0.25"/>
-            <circle cx="38" cy="38" r="26" fill="none" stroke="#d4a017" strokeWidth="1.2" opacity="0.45"/>
-            <circle cx="38" cy="38" r="30" fill="none" stroke="#f0deb8" strokeWidth="0.8" opacity="0.3"/>
+            <defs><radialGradient id="mSunG" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor={mc.sunLight}/><stop offset="55%" stopColor={mc.sun}/><stop offset="100%" stopColor={mc.sunDark}/></radialGradient></defs>
+            <circle cx="38" cy="38" r="37" fill={`${mc.sun}1a`}/>
+            {Array.from({length:16},(_,i)=>{const a=(i*22.5)*Math.PI/180;return <line key={i} x1={38+26*Math.cos(a)} y1={38+26*Math.sin(a)} x2={38+(i%2===0?36:32)*Math.cos(a)} y2={38+(i%2===0?36:32)*Math.sin(a)} stroke={mc.point} strokeWidth={i%2===0?"2":"1.2"} opacity="0.9"/>;  })}
+            <circle cx="38" cy="38" r="24" fill="url(#mSunG)" opacity="0.96"/>
+            <circle cx="38" cy="38" r="24" fill="none" stroke={mc.point} strokeWidth="1.5" opacity="0.75"/>
           </svg>
         </div>
-        {/* 소나무 Pine — left */}
-        <div style={{position:"fixed",left:0,bottom:0,zIndex:3,pointerEvents:"none",width:100,height:"68vh"}}>
-          <svg viewBox="0 0 100 500" width="100%" height="100%" preserveAspectRatio="xMinYMax meet">
-            <g opacity="0.92">
-              <polygon points="52,18 82,82 66,76 88,140 70,133 94,200 72,190 90,258 64,244 80,310 44,296 8,310 24,244 -2,258 16,190 -6,200 18,133 0,140 22,76 6,82" fill="#16301e"/>
-              <polygon points="52,18 80,78 65,73 86,134 68,128 90,192 70,183 87,248 63,235 78,300 44,287 10,300 25,235 1,248 18,183 -2,192 20,128 2,134 24,73 9,78" fill="#1e3f28" opacity="0.6"/>
-              <path d="M46,296 Q42,340 40,430 Q42,450 50,455 Q58,450 60,430 Q58,340 54,296 Z" fill="#2a1c0e"/>
-              <ellipse cx="50" cy="458" rx="22" ry="7" fill="#140e05" opacity="0.6"/>
+
+        {/* 산 Mountain layers */}
+        <div style={{position:"fixed",left:0,right:0,bottom:110,zIndex:3,pointerEvents:"none"}}>
+          <svg viewBox="0 0 1440 340" preserveAspectRatio="none" style={{width:"100%",height:"270px",display:"block"}}>
+            {/* 뒤 산 */}
+            <path d="M0,260 C160,168 280,128 430,154 C580,180 650,132 800,118 C950,104 1040,148 1190,132 C1340,116 1420,152 1440,148 L1440,340 L0,340 Z" fill="#2d5248" opacity="0.62"/>
+            {/* 중간 산 */}
+            <path d="M0,282 C130,210 220,178 360,194 C500,210 568,162 718,148 C868,134 950,172 1096,158 C1242,144 1370,178 1440,172 L1440,340 L0,340 Z" fill="#3d6b5e" opacity="0.72"/>
+            {/* 앞 산 */}
+            <path d="M0,306 C95,260 168,238 278,252 C388,266 462,232 590,220 C718,208 786,240 918,234 C1050,228 1138,206 1258,218 C1378,230 1428,248 1440,244 L1440,340 L0,340 Z" fill="#4a7c6f" opacity="0.85"/>
+            {/* 소나무 1 */}
+            <g transform="translate(418,106)">
+              <polygon points="0,-52 19,0 9,-5 24,30 11,22 19,60 -19,60 -11,22 -24,30 -9,-5 -19,0" fill="#1a3d2b" opacity="0.92"/>
+              <rect x="-4" y="56" width="8" height="18" fill="#2a1c0e" opacity="0.88"/>
+            </g>
+            {/* 소나무 2 */}
+            <g transform="translate(795,100) scale(0.88)">
+              <polygon points="0,-52 19,0 9,-5 24,30 11,22 19,60 -19,60 -11,22 -24,30 -9,-5 -19,0" fill="#1a3d2b" opacity="0.92"/>
+              <rect x="-4" y="56" width="8" height="18" fill="#2a1c0e" opacity="0.88"/>
+            </g>
+            {/* 소나무 3 */}
+            <g transform="translate(1190,110) scale(0.82)">
+              <polygon points="0,-52 19,0 9,-5 24,30 11,22 19,60 -19,60 -11,22 -24,30 -9,-5 -19,0" fill="#1a3d2b" opacity="0.88"/>
+              <rect x="-4" y="56" width="8" height="18" fill="#2a1c0e" opacity="0.85"/>
             </g>
           </svg>
         </div>
-        {/* 소나무 Pine — right */}
-        <div style={{position:"fixed",right:0,bottom:0,zIndex:3,pointerEvents:"none",width:100,height:"68vh"}}>
-          <svg viewBox="0 0 100 500" width="100%" height="100%" preserveAspectRatio="xMaxYMax meet">
-            <g opacity="0.92">
-              <polygon points="48,18 18,82 34,76 12,140 30,133 6,200 28,190 10,258 36,244 20,310 56,296 92,310 76,244 102,258 84,190 106,200 82,133 100,140 78,76 94,82" fill="#16301e"/>
-              <polygon points="48,18 20,78 35,73 14,134 32,128 10,192 30,183 13,248 37,235 22,300 56,287 90,300 75,235 99,248 82,183 102,192 80,128 98,134 76,73 91,78" fill="#1e3f28" opacity="0.6"/>
-              <path d="M54,296 Q58,340 60,430 Q58,450 50,455 Q42,450 40,430 Q42,340 46,296 Z" fill="#2a1c0e"/>
-              <ellipse cx="50" cy="458" rx="22" ry="7" fill="#140e05" opacity="0.6"/>
-            </g>
-          </svg>
+
+        {/* 학 Crane 1 */}
+        <div style={{position:"fixed",top:"20%",left:"14%",zIndex:5,pointerEvents:"none",animation:"craneGlide 15s ease-in-out infinite"}}>
+          <svg width="76" height="38" viewBox="0 0 76 38"><g fill="none" stroke="white" strokeWidth="1.6" opacity="0.88"><path d="M8,19 Q23,7 38,13 Q53,7 68,19"/><circle cx="38" cy="12" r="3.2" fill="white" opacity="0.92"/><path d="M36,14 L38,27 L40,14"/><path d="M38,27 L34,35"/><path d="M38,27 L42,35"/><path d="M12,12 L8,5"/><path d="M64,12 L68,5"/></g></svg>
         </div>
-        {/* 구름 Clouds */}
-        <div style={{position:"fixed",top:"18%",left:"8%",zIndex:3,pointerEvents:"none",animation:"cloudDrift 8s ease-in-out infinite"}}>
-          <svg width="90" height="38" viewBox="0 0 90 38">
-            <ellipse cx="45" cy="26" rx="42" ry="14" fill="#f5e6c8" opacity="0.07"/>
-            <ellipse cx="30" cy="20" rx="28" ry="12" fill="#f5e6c8" opacity="0.08"/>
-            <ellipse cx="60" cy="22" rx="24" ry="10" fill="#f5e6c8" opacity="0.07"/>
-          </svg>
+        {/* 학 Crane 2 */}
+        <div style={{position:"fixed",top:"14%",left:"56%",zIndex:5,pointerEvents:"none",animation:"craneGlide 19s ease-in-out infinite reverse 4s"}}>
+          <svg width="56" height="28" viewBox="0 0 56 28"><g fill="none" stroke="white" strokeWidth="1.3" opacity="0.78"><path d="M6,14 Q17,5 28,9 Q39,5 50,14"/><circle cx="28" cy="9" r="2.6" fill="white" opacity="0.88"/><path d="M26,10 L28,21 L30,10"/><path d="M28,21 L25,27"/><path d="M28,21 L31,27"/></g></svg>
         </div>
-        <div style={{position:"fixed",top:"22%",right:"10%",zIndex:3,pointerEvents:"none",animation:"cloudDrift 11s ease-in-out infinite reverse"}}>
-          <svg width="72" height="30" viewBox="0 0 72 30">
-            <ellipse cx="36" cy="20" rx="34" ry="12" fill="#f5e6c8" opacity="0.07"/>
-            <ellipse cx="22" cy="16" rx="20" ry="9" fill="#f5e6c8" opacity="0.08"/>
-            <ellipse cx="52" cy="17" rx="18" ry="8" fill="#f5e6c8" opacity="0.06"/>
-          </svg>
-        </div>
-        {/* 학 Crane birds */}
-        <div style={{position:"fixed",top:"30%",left:"14%",zIndex:3,pointerEvents:"none",animation:"craneFlap 6s ease-in-out infinite"}}>
-          <svg width="48" height="28" viewBox="0 0 48 28">
-            <path d="M8,14 Q18,4 24,10 Q30,4 40,14" fill="none" stroke="#f5e6c8" strokeWidth="1.5" opacity="0.25"/>
-            <circle cx="24" cy="12" r="2.5" fill="#f5e6c8" opacity="0.2"/>
-            <path d="M22,14 L24,22 L26,14" fill="none" stroke="#f5e6c8" strokeWidth="1" opacity="0.2"/>
-          </svg>
-        </div>
-        <div style={{position:"fixed",top:"26%",right:"16%",zIndex:3,pointerEvents:"none",animation:"craneFlap 8s ease-in-out infinite 1s"}}>
-          <svg width="38" height="22" viewBox="0 0 38 22">
-            <path d="M6,11 Q14,3 19,8 Q24,3 32,11" fill="none" stroke="#f5e6c8" strokeWidth="1.2" opacity="0.2"/>
-            <circle cx="19" cy="9" r="2" fill="#f5e6c8" opacity="0.18"/>
-            <path d="M17,11 L19,18 L21,11" fill="none" stroke="#f5e6c8" strokeWidth="0.8" opacity="0.18"/>
-          </svg>
+        {/* 학 Crane 3 */}
+        <div style={{position:"fixed",top:"28%",left:"36%",zIndex:5,pointerEvents:"none",animation:"craneGlide 24s ease-in-out infinite 9s"}}>
+          <svg width="44" height="22" viewBox="0 0 44 22"><g fill="none" stroke="white" strokeWidth="1.1" opacity="0.65"><path d="M5,11 Q13,4 22,7 Q31,4 39,11"/><circle cx="22" cy="7" r="2" fill="white" opacity="0.82"/><path d="M20,8 L22,17 L24,8"/></g></svg>
         </div>
       </>)}
 
       {/* Lang switcher — flags only */}
       <div style={{position:"fixed",top:14,right:14,zIndex:100}}>
-        <div className="lang-bar">
+        <div className="lang-bar" style={minhwaMode?{background:"rgba(45,24,16,0.78)",borderColor:"rgba(212,160,23,0.4)",boxShadow:"0 4px 20px rgba(45,24,16,0.3)"}:{}}>
           {Object.entries(LANG_CONFIG).map(([l,cfg])=>(
             <div key={l} style={{position:"relative"}}>
               <button
@@ -886,6 +885,7 @@ Be specific and strategic. No vague answers. Real career moves tied to timing wi
                 onClick={()=>setLang(l)}
                 title={cfg.label}
                 aria-label={cfg.label}
+                style={minhwaMode?{color:"#f5e6c8"}:{}}
               >{cfg.flag}</button>
               {lang===l && <div className="lang-dot"/>}
             </div>
@@ -895,102 +895,101 @@ Be specific and strategic. No vague answers. Real career moves tied to timing wi
 
       <div style={{maxWidth:600,margin:"0 auto",padding:"0 20px",position:"relative",zIndex:10}}>
 
-        {/* LANDING — 민화 Minhwa style */}
+        {/* LANDING — 민화 십장생 (all languages) */}
         {step==="landing" && (
-          <div className="fade-up" style={{textAlign:"center",paddingTop:"10vh",paddingBottom:160,position:"relative"}}>
+          <div className="fade-up" style={{textAlign:"center",paddingTop:"9vh",paddingBottom:220,position:"relative",zIndex:10}}>
 
-            {/* ── 민화 프레임 장식 테두리 ── */}
-            <div style={{position:"absolute",top:"-2vh",left:-8,right:-8,bottom:0,border:"1px solid rgba(212,160,23,0.12)",borderRadius:4,pointerEvents:"none"}}/>
-            <div style={{position:"absolute",top:"-2vh",left:4,right:4,bottom:8,border:"1px solid rgba(212,160,23,0.07)",borderRadius:4,pointerEvents:"none"}}/>
+            {/* 민화 프레임 장식 테두리 */}
+            <div style={{position:"absolute",top:"-2vh",left:-8,right:-8,bottom:0,border:`1px solid ${mc.point}1e`,borderRadius:4,pointerEvents:"none"}}/>
+            <div style={{position:"absolute",top:"-2vh",left:4,right:4,bottom:8,border:`1px solid ${mc.point}0f`,borderRadius:4,pointerEvents:"none"}}/>
 
-            {/* ── 오방색 연결 장식 ── */}
-            <div style={{display:"flex",justifyContent:"center",gap:10,marginBottom:20,alignItems:"center"}}>
-              {["#c84b2f","#d4a017","#f5e6c8","#4a9e8a","#1a3322"].map((c,i)=>(
-                <div key={i} style={{width:i===2?10:7,height:i===2?10:7,borderRadius:"50%",background:c,boxShadow:`0 0 8px ${c}88`,opacity:0.85}}/>
+            {/* 오방색 점 */}
+            <div style={{display:"flex",justifyContent:"center",gap:10,marginBottom:22,alignItems:"center"}}>
+              {[mc.sun,"#d4a017","#2d1810","#4a9e8a","#1a3d2b"].map((c,i)=>(
+                <div key={i} style={{width:i===2?10:7,height:i===2?10:7,borderRadius:"50%",background:c,boxShadow:`0 0 10px ${c}99`,opacity:0.9}}/>
               ))}
             </div>
 
-            {/* ── 상단 장식 텍스트 ── */}
-            <div style={{fontSize:10,letterSpacing:6,color:"#d4a017",fontWeight:700,marginBottom:18,fontFamily:"'Noto Serif KR',serif",opacity:0.8}}>
+            {/* 운명 헤더 */}
+            <div style={{fontSize:10,letterSpacing:6,color:mc.sun,fontWeight:700,marginBottom:18,fontFamily:"'Noto Serif KR',serif",opacity:0.88}}>
               運命 · 命運 · DESTINY
             </div>
 
-            {/* ── 수정구슬 Crystal orb ── */}
+            {/* 수정구슬 */}
             <div style={{display:"flex",justifyContent:"center",marginBottom:22}}>
-              <div style={{position:"relative",width:140,height:140,display:"inline-flex",alignItems:"center",justifyContent:"center"}}>
-                {/* Outer ring — gold */}
-                <div style={{position:"absolute",inset:-18,borderRadius:"50%",border:"1.5px solid #d4a017",opacity:0.4,animation:"crystalRingOut 3.5s ease-in-out infinite"}}/>
-                <div style={{position:"absolute",inset:-8,borderRadius:"50%",border:"1px solid #4a9e8a",opacity:0.35,animation:"crystalRingOut 3.5s ease-in-out infinite 0.7s"}}/>
-                {/* Glow */}
-                <div style={{position:"absolute",inset:-4,borderRadius:"50%",background:"radial-gradient(circle,#c84b2f33 0%,#d4a01722 40%,transparent 70%)",animation:"crystalPulse 3s ease-in-out infinite"}}/>
-                <span style={{fontSize:92,lineHeight:1,position:"relative",zIndex:2,animation:"float 5s ease-in-out infinite",filter:"drop-shadow(0 0 20px #d4a01788) drop-shadow(0 0 40px #c84b2f44)"}}>🔮</span>
+              <div style={{position:"relative",width:130,height:130,display:"inline-flex",alignItems:"center",justifyContent:"center"}}>
+                <div style={{position:"absolute",inset:-18,borderRadius:"50%",border:`1.5px solid ${mc.point}`,opacity:0.55,animation:"crystalRingOut 3.5s ease-in-out infinite"}}/>
+                <div style={{position:"absolute",inset:-8,borderRadius:"50%",border:`1px solid ${mc.sun}`,opacity:0.45,animation:"crystalRingOut 3.5s ease-in-out infinite 0.7s"}}/>
+                <div style={{position:"absolute",inset:-4,borderRadius:"50%",background:`radial-gradient(circle,${mc.sun}2e 0%,${mc.point}14 40%,transparent 70%)`,animation:"crystalPulse 3s ease-in-out infinite"}}/>
+                <span style={{fontSize:88,lineHeight:1,position:"relative",zIndex:2,animation:"float 5s ease-in-out infinite",filter:`drop-shadow(0 0 18px ${mc.point}99) drop-shadow(0 0 36px ${mc.sun}4d)`}}>🔮</span>
               </div>
             </div>
 
-            {/* ── 타이틀 붓글씨 ── */}
-            <h1 className="minhwa-title" style={{fontSize:"clamp(52px,13vw,84px)",fontWeight:900,lineHeight:1.0,marginBottom:6,letterSpacing:"4px"}}>
+            {/* KarmaMap 타이틀 — 먹색 + 포인트 컬러 테두리 */}
+            <h1 style={{fontSize:"clamp(50px,12vw,78px)",fontWeight:900,lineHeight:1.0,marginBottom:6,letterSpacing:"4px",fontFamily:"'Noto Serif KR',serif",color:"#2d1810",textShadow:`1px 2px 0 rgba(45,24,16,0.18),0 0 40px ${mc.point}1e`,WebkitTextStroke:`0.8px ${mc.point}`}}>
               KarmaMap
             </h1>
-
-            {/* ── 한자 부제 ── */}
-            <div style={{fontSize:13,letterSpacing:8,color:"#4a9e8a",fontFamily:"'Noto Serif KR',serif",marginBottom:12,opacity:0.75}}>
+            <div style={{fontSize:13,letterSpacing:8,color:"#4a7c6f",fontFamily:"'Noto Serif KR',serif",marginBottom:12,opacity:0.85}}>
               카르마맵
             </div>
 
-            {/* ── 민화 구분선 ── */}
+            {/* 민화 구분선 */}
             <div style={{display:"flex",alignItems:"center",gap:10,justifyContent:"center",margin:"14px auto 18px",maxWidth:320}}>
-              <div style={{flex:1,height:1,background:"linear-gradient(90deg,transparent,#d4a017aa)"}}/>
-              <svg width="28" height="28" viewBox="0 0 28 28">
-                <circle cx="14" cy="14" r="10" fill="none" stroke="#d4a017" strokeWidth="1.2" opacity="0.6"/>
-                <circle cx="14" cy="14" r="5" fill="#d4a017" opacity="0.5"/>
-                <line x1="14" y1="2" x2="14" y2="26" stroke="#d4a017" strokeWidth="0.8" opacity="0.3"/>
-                <line x1="2" y1="14" x2="26" y2="14" stroke="#d4a017" strokeWidth="0.8" opacity="0.3"/>
+              <div style={{flex:1,height:1,background:`linear-gradient(90deg,transparent,${mc.sun}99)`}}/>
+              <svg width="26" height="26" viewBox="0 0 26 26">
+                <circle cx="13" cy="13" r="9" fill="none" stroke={mc.point} strokeWidth="1.2" opacity="0.75"/>
+                <circle cx="13" cy="13" r="4" fill={mc.point} opacity="0.55"/>
+                <line x1="13" y1="2" x2="13" y2="24" stroke={mc.point} strokeWidth="0.8" opacity="0.45"/>
+                <line x1="2" y1="13" x2="24" y2="13" stroke={mc.point} strokeWidth="0.8" opacity="0.45"/>
               </svg>
-              <div style={{flex:1,height:1,background:"linear-gradient(90deg,#d4a017aa,transparent)"}}/>
+              <div style={{flex:1,height:1,background:`linear-gradient(90deg,${mc.sun}99,transparent)`}}/>
             </div>
 
-            {/* ── 태그라인 ── */}
-            <p style={{fontSize:"clamp(14px,3.5vw,18px)",color:"#f5e6c8",marginBottom:6,fontWeight:600,fontFamily:"'Noto Serif KR',serif",opacity:0.9}}>
+            {/* 태그라인 */}
+            <p style={{fontSize:"clamp(14px,3.5vw,17px)",color:"#2d1810",marginBottom:6,fontWeight:700,fontFamily:"'Noto Serif KR',serif",opacity:0.88,fontStyle:"italic"}}>
               {t.tagline}
             </p>
-            <p style={{fontSize:13,color:"rgba(245,230,200,0.5)",marginBottom:30,lineHeight:1.7,maxWidth:360,margin:"0 auto 30px"}}>
+            <p style={{fontSize:13,color:"rgba(45,24,16,0.55)",marginBottom:30,lineHeight:1.7,maxWidth:360,margin:"0 auto 30px",fontFamily:"'Noto Serif KR',serif"}}>
               {t.subtitle}
             </p>
 
-            {/* ── 운세 시스템 뱃지 ── */}
+            {/* 운세 시스템 badges */}
             <div style={{display:"flex",flexWrap:"wrap",gap:8,justifyContent:"center",marginBottom:36}}>
               {FORTUNE_SYSTEMS.map(sys=>(
-                <span key={sys.id} style={{background:"rgba(212,160,23,0.08)",border:"1px solid rgba(212,160,23,0.3)",padding:"6px 14px",borderRadius:20,fontSize:13,color:"#f5e6c8",fontFamily:"'Noto Serif KR',serif"}}>
+                <span key={sys.id} style={{background:`${mc.point}26`,border:`1px solid ${mc.point}`,padding:"6px 14px",borderRadius:20,fontSize:13,color:"#2d1810",fontFamily:"'Noto Serif KR',serif"}}>
                   {sys.flag} {sys.label}
                 </span>
               ))}
             </div>
 
-            {/* ── CTA 버튼 민화 스타일 ── */}
+            {/* CTA 버튼 */}
             <button
               onClick={()=>{setStep("form");setFormStep(1);}}
-              style={{background:"linear-gradient(135deg,#c84b2f,#8b2010)",border:"2px solid #d4a017",color:"#f5e6c8",padding:"16px 52px",borderRadius:4,fontSize:17,fontWeight:700,cursor:"pointer",fontFamily:"'Noto Serif KR',serif",letterSpacing:2,boxShadow:"0 0 30px #c84b2f44,inset 0 1px 0 rgba(212,160,23,0.3)",transition:"all 0.25s",animation:"glow 2.5s ease-in-out infinite"}}
-              onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.05)";e.currentTarget.style.boxShadow="0 0 50px #c84b2f66,inset 0 1px 0 rgba(212,160,23,0.4)";}}
-              onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="0 0 30px #c84b2f44,inset 0 1px 0 rgba(212,160,23,0.3)";}}
+              style={{background:mc.btn,border:`2px solid ${mc.point}`,color:"#f5e6c8",padding:"16px 52px",borderRadius:4,fontSize:17,fontWeight:700,cursor:"pointer",fontFamily:"'Noto Serif KR',serif",letterSpacing:2,boxShadow:`0 4px 24px ${mc.sun}61,inset 0 1px 0 ${mc.point}4d`,transition:"all 0.25s",animation:"glow 2.5s ease-in-out infinite"}}
+              onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.05)";e.currentTarget.style.boxShadow=`0 6px 40px ${mc.sun}99,0 0 0 2px ${mc.point},inset 0 1px 0 ${mc.point}66`;}}
+              onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow=`0 4px 24px ${mc.sun}61,inset 0 1px 0 ${mc.point}4d`;}}
             >
               {t.startBtn}
             </button>
 
-            {/* ── 하단 장식 ── */}
-            <div style={{marginTop:32,display:"flex",justifyContent:"center",gap:20,flexWrap:"wrap"}}>
-              {[["✦","AI-Powered"],["🌏","5 Languages"],["💎","Free Forever"],["🔒","Private"]].map(([icon,label])=>(
-                <span key={label} style={{fontSize:12,color:"rgba(245,230,200,0.45)",background:"rgba(212,160,23,0.06)",border:"1px solid rgba(212,160,23,0.18)",padding:"5px 13px",borderRadius:2,fontFamily:"'Noto Serif KR',serif"}}>
+            {/* 하단 특징 배지 */}
+            <div style={{marginTop:32,display:"flex",justifyContent:"center",gap:14,flexWrap:"wrap"}}>
+              {(lang==="ko"?[["✦","AI 분석"],["🌏","5개 언어"],["💎","무료"],["🔒","프라이빗"]]:
+                lang==="zh"?[["✦","AI分析"],["🌏","5语言"],["💎","免费"],["🔒","隐私"]]:
+                lang==="ms"?[["✦","AI Analisis"],["🌏","5 Bahasa"],["💎","Percuma"],["🔒","Privat"]]:
+                lang==="in"?[["✦","AI Analysis"],["🌏","5 Languages"],["💎","Free"],["🔒","Private"]]:
+                [["✦","AI-Powered"],["🌏","5 Languages"],["💎","Free Forever"],["🔒","Private"]]
+              ).map(([icon,label])=>(
+                <span key={label} style={{fontSize:12,color:"rgba(45,24,16,0.52)",background:`${mc.point}1a`,border:`1px solid ${mc.point}52`,padding:"5px 13px",borderRadius:2,fontFamily:"'Noto Serif KR',serif"}}>
                   {icon} {label}
                 </span>
               ))}
             </div>
 
-            {/* ── AdSense ── */}
-            <div className="ad-slot" style={{marginTop:36,padding:"18px 20px",minHeight:90,display:"flex",alignItems:"center",justifyContent:"center"}}>
-              {/* <ins className="adsbygoogle" style={{display:"block",width:"100%"}} data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"/> */}
-              <span style={{fontSize:12,color:"rgba(245,230,200,0.3)"}}>{t.adLabel}</span>
+            {/* AdSense */}
+            <div style={{marginTop:36,padding:"18px 20px",minHeight:90,display:"flex",alignItems:"center",justifyContent:"center",borderRadius:16,border:`1px solid ${mc.point}38`,background:`${mc.point}12`}}>
+              <span style={{fontSize:12,color:"rgba(45,24,16,0.3)"}}>{t.adLabel}</span>
             </div>
-
           </div>
         )}
 
@@ -1282,6 +1281,28 @@ Be specific and strategic. No vague answers. Real career moves tied to timing wi
         )}
 
       </div>
+
+      {/* ── Footer ── */}
+      <footer style={{textAlign:"center",padding:"20px 20px 90px",position:"relative",zIndex:10}}>
+        <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:10,flexWrap:"wrap",fontSize:12,marginBottom:8}}>
+          {[["Privacy Policy","/privacy"],["Terms of Use","/terms"]].map(([label,href])=>(
+            <a key={label} href={href} style={{color:minhwaMode?"rgba(45,24,16,0.5)":theme.muted,textDecoration:"none",transition:"color 0.2s"}}
+              onMouseEnter={e=>e.currentTarget.style.color=minhwaMode?"#c84b2f":p}
+              onMouseLeave={e=>e.currentTarget.style.color=minhwaMode?"rgba(45,24,16,0.5)":theme.muted}
+            >{label}</a>
+          ))}
+          <span style={{color:minhwaMode?"rgba(45,24,16,0.3)":theme.muted}}>·</span>
+          <a href="mailto:kohmanner@gmail.com" style={{color:minhwaMode?"rgba(45,24,16,0.5)":theme.muted,textDecoration:"none",transition:"color 0.2s"}}
+            onMouseEnter={e=>e.currentTarget.style.color=minhwaMode?"#c84b2f":p}
+            onMouseLeave={e=>e.currentTarget.style.color=minhwaMode?"rgba(45,24,16,0.5)":theme.muted}
+          >Contact</a>
+          <span style={{color:minhwaMode?"rgba(45,24,16,0.3)":theme.muted}}>·</span>
+          <span style={{color:minhwaMode?"rgba(45,24,16,0.4)":theme.muted}}>About KarmaMap</span>
+        </div>
+        <p style={{fontSize:11,color:minhwaMode?"rgba(45,24,16,0.3)":theme.muted}}>
+          © 2025 KarmaMap · AI Fortune & Career Strategy · Singapore
+        </p>
+      </footer>
 
       {/* ── Share & PDF Modal ── */}
       {showShareModal && (
