@@ -719,7 +719,7 @@ Be specific and strategic. No vague answers. Real career moves tied to timing wi
   `;
 
   return (
-    <div style={{minHeight:"100vh",background:minhwaMode?"linear-gradient(180deg,#c8e8f0 0%,#d8eef5 18%,#e8e0c4 55%,#f5e6c8 100%)":theme.bg,fontFamily:fn,color:minhwaMode?"#2d1810":theme.text,transition:"all 0.5s ease",position:"relative",overflow:"hidden"}}>
+    <div style={{minHeight:"100vh",background:minhwaMode?"url('/images/landing-bg.png') center top / cover no-repeat":theme.bg,fontFamily:fn,color:minhwaMode?"#2d1810":theme.text,position:"relative",overflow:"hidden"}}>
       <style>{css}</style>
 
       {/* ── Star particles ── */}
@@ -732,56 +732,8 @@ Be specific and strategic. No vague answers. Real career moves tied to timing wi
         <div style={{position:"fixed",top:"40%",left:"60%",width:260,height:260,background:step==="landing"?"#d4a017":theme.accent,borderRadius:"50%",filter:"blur(110px)",opacity:step==="landing"?0.09:0.07,pointerEvents:"none",zIndex:1}}/>
       </>)}
 
-      {/* ── Bottom decoration: Minhwa waves (landing) or Mountain (other) ── */}
-      {minhwaMode ? (
-        <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:6,pointerEvents:"none",height:130,overflow:"hidden"}}>
-          <div style={{width:"200%",height:"100%",animation:"waveSlide 22s linear infinite"}}>
-            <svg viewBox="0 0 2880 130" preserveAspectRatio="none" style={{width:"100%",height:"100%",display:"block"}}>
-              <path d="M0,70 C140,44 240,62 380,52 C520,42 620,64 760,54 C900,44 1000,62 1140,52 C1280,42 1380,60 1520,50 C1660,40 1760,58 1920,48 L1920,130 L0,130 Z M1920,70 C2060,44 2160,62 2300,52 C2440,42 2540,64 2680,54 C2820,44 2880,60 2880,54 L2880,130 L1920,130 Z" fill="#2d6b5e" opacity="0.6"/>
-              <path d="M0,84 C110,64 190,80 310,70 C430,60 510,80 640,70 C770,60 855,78 980,68 C1105,58 1190,76 1320,66 C1450,56 1535,74 1660,64 C1785,54 1870,72 1920,65 L1920,130 L0,130 Z M1920,84 C2030,64 2110,80 2230,70 C2350,60 2430,80 2560,70 C2690,60 2775,78 2880,68 L2880,130 L1920,130 Z" fill="#3d8a78" opacity="0.75"/>
-              <path d="M0,97 C88,78 158,94 268,84 C378,74 452,96 572,86 C692,76 768,94 888,84 C1008,74 1082,92 1202,82 C1322,72 1396,90 1516,80 C1636,70 1710,88 1830,78 L1920,80 L1920,130 L0,130 Z M1920,97 C2008,78 2078,94 2188,84 C2298,74 2372,96 2492,86 C2612,76 2686,94 2806,84 L2880,82 L2880,130 L1920,130 Z" fill="#4a9e8a" opacity="0.90"/>
-              {Array.from({length:28},(_,i)=>(
-                <circle key={i} cx={i*104+52} cy={88-(i%3)*5} r="2.6" fill="white" opacity="0.4"/>
-              ))}
-            </svg>
-          </div>
-        </div>
-      ) : step==="landing" ? (
-        <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:2,pointerEvents:"none",height:"36vh",minHeight:180}}>
-          <svg viewBox="0 0 1440 260" preserveAspectRatio="none" style={{width:"100%",height:"100%",display:"block"}}>
-            <defs>
-              <linearGradient id="wBase" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#0d2a24" stopOpacity="0.98"/>
-                <stop offset="100%" stopColor="#0a0a08" stopOpacity="1"/>
-              </linearGradient>
-              <filter id="wBlur"><feGaussianBlur stdDeviation="1.5"/></filter>
-            </defs>
-            <rect x="0" y="70" width="1440" height="190" fill="url(#wBase)"/>
-            {/* Wave tier 1 — deep back */}
-            <path d="M0,85 C90,50 180,35 270,52 C360,69 450,88 540,78 C630,68 720,42 810,55 C900,68 990,88 1080,80 C1170,72 1260,48 1350,60 L1440,68 L1440,260 L0,260 Z" fill="#122e28" opacity="0.95"/>
-            {/* Wave tier 2 */}
-            <path d="M0,108 C90,76 180,62 270,78 C360,94 450,112 540,102 C630,92 720,68 810,80 C900,92 990,112 1080,104 C1170,96 1260,72 1350,84 L1440,90 L1440,260 L0,260 Z" fill="#163630" opacity="0.9"/>
-            {/* Wave tier 3 — front */}
-            <path d="M0,132 C72,104 144,90 216,104 C288,118 360,138 432,128 C504,118 576,96 648,108 C720,120 792,138 864,130 C936,122 1008,100 1080,112 C1152,124 1224,140 1296,132 C1368,124 1404,116 1440,120 L1440,260 L0,260 Z" fill="#1a3f38" opacity="0.95"/>
-            {/* Gold crest lines */}
-            <path d="M0,132 C72,104 144,90 216,104 C288,118 360,138 432,128 C504,118 576,96 648,108 C720,120 792,138 864,130 C936,122 1008,100 1080,112 C1152,124 1224,140 1296,132 C1368,124 1404,116 1440,120" fill="none" stroke="#d4a017" strokeWidth="1.8" opacity="0.45"/>
-            <path d="M0,108 C90,76 180,62 270,78 C360,94 450,112 540,102 C630,92 720,68 810,80 C900,92 990,112 1080,104 C1170,96 1260,72 1350,84 L1440,90" fill="none" stroke="#d4a017" strokeWidth="1" opacity="0.25"/>
-            {/* Teal wave highlights */}
-            <path d="M0,132 C72,104 144,90 216,104" fill="none" stroke="#4a9e8a" strokeWidth="2" opacity="0.3"/>
-            <path d="M432,128 C504,118 576,96 648,108" fill="none" stroke="#4a9e8a" strokeWidth="2" opacity="0.3"/>
-            <path d="M864,130 C936,122 1008,100 1080,112" fill="none" stroke="#4a9e8a" strokeWidth="2" opacity="0.3"/>
-            {/* Foam dots on crest */}
-            {[60,190,320,450,580,710,840,970,1100,1230,1360].map((x,i)=>{
-              const ys=[118,132,122,132,102,116,130,118,108,134,126];
-              return <circle key={i} cx={x} cy={ys[i]-5} r="2.8" fill="#f5e6c8" opacity="0.35"/>;
-            })}
-            {/* Swirl accents */}
-            {[100,340,580,820,1060,1300].map((x,i)=>(
-              <path key={i} d={`M${x},${100+i%2*14} Q${x+18},${88+i%2*14} ${x+36},${100+i%2*14} Q${x+28},${94+i%2*14} ${x+50},${100+i%2*14}`} fill="none" stroke="#4a9e8a" strokeWidth="1.2" opacity="0.3"/>
-            ))}
-          </svg>
-        </div>
-      ) : (
+      {/* ── Bottom decoration: Mountain (non-landing only) ── */}
+      {!minhwaMode && (
         <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:2,pointerEvents:"none",height:"38vh",minHeight:200}}>
           <svg viewBox="0 0 1440 320" preserveAspectRatio="none" style={{width:"100%",height:"100%",display:"block"}}>
             <defs>
@@ -811,74 +763,10 @@ Be specific and strategic. No vague answers. Real career moves tied to timing wi
         </div>
       )}
 
-      {/* ── 민화 십장생 고정 배경 (all languages, landing only) ── */}
-      {minhwaMode && (<>
-        {/* 한지 grain texture */}
-        <svg style={{position:"fixed",inset:0,width:"100%",height:"100%",zIndex:2,pointerEvents:"none"}} xmlns="http://www.w3.org/2000/svg">
-          <filter id="hanjiNoise"><feTurbulence type="fractalNoise" baseFrequency="0.68" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer></filter>
-          <rect width="100%" height="100%" filter="url(#hanjiNoise)"/>
-        </svg>
-
-        {/* 달 Moon — top left */}
-        <div style={{position:"fixed",top:52,left:56,zIndex:4,pointerEvents:"none",animation:"moonFloat 8s ease-in-out infinite"}}>
-          <div style={{width:64,height:64,borderRadius:"50%",background:"radial-gradient(circle at 38% 35%,#fdfaf2 0%,#f0e8c8 60%,#e4d4a8 100%)",boxShadow:"0 0 28px rgba(240,232,200,0.85),0 0 56px rgba(240,220,180,0.3)",border:"1px solid rgba(212,160,23,0.35)"}}/>
-        </div>
-
-        {/* 해 Sun — top right */}
-        <div style={{position:"fixed",top:46,right:62,zIndex:4,pointerEvents:"none",animation:"minhwaSunPulse 4s ease-in-out infinite"}}>
-          <svg width="76" height="76" viewBox="0 0 76 76">
-            <defs><radialGradient id="mSunG" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor={mc.sunLight}/><stop offset="55%" stopColor={mc.sun}/><stop offset="100%" stopColor={mc.sunDark}/></radialGradient></defs>
-            <circle cx="38" cy="38" r="37" fill={`${mc.sun}1a`}/>
-            {Array.from({length:16},(_,i)=>{const a=(i*22.5)*Math.PI/180;return <line key={i} x1={38+26*Math.cos(a)} y1={38+26*Math.sin(a)} x2={38+(i%2===0?36:32)*Math.cos(a)} y2={38+(i%2===0?36:32)*Math.sin(a)} stroke={mc.point} strokeWidth={i%2===0?"2":"1.2"} opacity="0.9"/>;  })}
-            <circle cx="38" cy="38" r="24" fill="url(#mSunG)" opacity="0.96"/>
-            <circle cx="38" cy="38" r="24" fill="none" stroke={mc.point} strokeWidth="1.5" opacity="0.75"/>
-          </svg>
-        </div>
-
-        {/* 산 Mountain layers */}
-        <div style={{position:"fixed",left:0,right:0,bottom:110,zIndex:3,pointerEvents:"none"}}>
-          <svg viewBox="0 0 1440 340" preserveAspectRatio="none" style={{width:"100%",height:"270px",display:"block"}}>
-            {/* 뒤 산 */}
-            <path d="M0,260 C160,168 280,128 430,154 C580,180 650,132 800,118 C950,104 1040,148 1190,132 C1340,116 1420,152 1440,148 L1440,340 L0,340 Z" fill="#2d5248" opacity="0.62"/>
-            {/* 중간 산 */}
-            <path d="M0,282 C130,210 220,178 360,194 C500,210 568,162 718,148 C868,134 950,172 1096,158 C1242,144 1370,178 1440,172 L1440,340 L0,340 Z" fill="#3d6b5e" opacity="0.72"/>
-            {/* 앞 산 */}
-            <path d="M0,306 C95,260 168,238 278,252 C388,266 462,232 590,220 C718,208 786,240 918,234 C1050,228 1138,206 1258,218 C1378,230 1428,248 1440,244 L1440,340 L0,340 Z" fill="#4a7c6f" opacity="0.85"/>
-            {/* 소나무 1 */}
-            <g transform="translate(418,106)">
-              <polygon points="0,-52 19,0 9,-5 24,30 11,22 19,60 -19,60 -11,22 -24,30 -9,-5 -19,0" fill="#1a3d2b" opacity="0.92"/>
-              <rect x="-4" y="56" width="8" height="18" fill="#2a1c0e" opacity="0.88"/>
-            </g>
-            {/* 소나무 2 */}
-            <g transform="translate(795,100) scale(0.88)">
-              <polygon points="0,-52 19,0 9,-5 24,30 11,22 19,60 -19,60 -11,22 -24,30 -9,-5 -19,0" fill="#1a3d2b" opacity="0.92"/>
-              <rect x="-4" y="56" width="8" height="18" fill="#2a1c0e" opacity="0.88"/>
-            </g>
-            {/* 소나무 3 */}
-            <g transform="translate(1190,110) scale(0.82)">
-              <polygon points="0,-52 19,0 9,-5 24,30 11,22 19,60 -19,60 -11,22 -24,30 -9,-5 -19,0" fill="#1a3d2b" opacity="0.88"/>
-              <rect x="-4" y="56" width="8" height="18" fill="#2a1c0e" opacity="0.85"/>
-            </g>
-          </svg>
-        </div>
-
-        {/* 학 Crane 1 */}
-        <div style={{position:"fixed",top:"20%",left:"14%",zIndex:5,pointerEvents:"none",animation:"craneGlide 15s ease-in-out infinite"}}>
-          <svg width="76" height="38" viewBox="0 0 76 38"><g fill="none" stroke="white" strokeWidth="1.6" opacity="0.88"><path d="M8,19 Q23,7 38,13 Q53,7 68,19"/><circle cx="38" cy="12" r="3.2" fill="white" opacity="0.92"/><path d="M36,14 L38,27 L40,14"/><path d="M38,27 L34,35"/><path d="M38,27 L42,35"/><path d="M12,12 L8,5"/><path d="M64,12 L68,5"/></g></svg>
-        </div>
-        {/* 학 Crane 2 */}
-        <div style={{position:"fixed",top:"14%",left:"56%",zIndex:5,pointerEvents:"none",animation:"craneGlide 19s ease-in-out infinite reverse 4s"}}>
-          <svg width="56" height="28" viewBox="0 0 56 28"><g fill="none" stroke="white" strokeWidth="1.3" opacity="0.78"><path d="M6,14 Q17,5 28,9 Q39,5 50,14"/><circle cx="28" cy="9" r="2.6" fill="white" opacity="0.88"/><path d="M26,10 L28,21 L30,10"/><path d="M28,21 L25,27"/><path d="M28,21 L31,27"/></g></svg>
-        </div>
-        {/* 학 Crane 3 */}
-        <div style={{position:"fixed",top:"28%",left:"36%",zIndex:5,pointerEvents:"none",animation:"craneGlide 24s ease-in-out infinite 9s"}}>
-          <svg width="44" height="22" viewBox="0 0 44 22"><g fill="none" stroke="white" strokeWidth="1.1" opacity="0.65"><path d="M5,11 Q13,4 22,7 Q31,4 39,11"/><circle cx="22" cy="7" r="2" fill="white" opacity="0.82"/><path d="M20,8 L22,17 L24,8"/></g></svg>
-        </div>
-      </>)}
 
       {/* Lang switcher — flags only */}
       <div style={{position:"fixed",top:14,right:14,zIndex:100}}>
-        <div className="lang-bar" style={minhwaMode?{background:"rgba(45,24,16,0.78)",borderColor:"rgba(212,160,23,0.4)",boxShadow:"0 4px 20px rgba(45,24,16,0.3)"}:{}}>
+        <div className="lang-bar" style={minhwaMode?{background:"rgba(242,232,213,0.85)",borderColor:"rgba(45,24,16,0.15)",boxShadow:"0 4px 20px rgba(45,24,16,0.12)"}:{}}>
           {Object.entries(LANG_CONFIG).map(([l,cfg])=>(
             <div key={l} style={{position:"relative"}}>
               <button
@@ -886,7 +774,7 @@ Be specific and strategic. No vague answers. Real career moves tied to timing wi
                 onClick={()=>setLang(l)}
                 title={cfg.label}
                 aria-label={cfg.label}
-                style={minhwaMode?{color:"#f5e6c8"}:{}}
+                style={minhwaMode?{color:"#2d1810"}:{}}
               >{cfg.flag}</button>
               {lang===l && <div className="lang-dot"/>}
             </div>
@@ -916,15 +804,6 @@ Be specific and strategic. No vague answers. Real career moves tied to timing wi
               運命 · 命運 · DESTINY
             </div>
 
-            {/* 수정구슬 */}
-            <div style={{display:"flex",justifyContent:"center",marginBottom:22}}>
-              <div style={{position:"relative",width:130,height:130,display:"inline-flex",alignItems:"center",justifyContent:"center"}}>
-                <div style={{position:"absolute",inset:-18,borderRadius:"50%",border:`1.5px solid ${mc.point}`,opacity:0.55,animation:"crystalRingOut 3.5s ease-in-out infinite"}}/>
-                <div style={{position:"absolute",inset:-8,borderRadius:"50%",border:`1px solid ${mc.sun}`,opacity:0.45,animation:"crystalRingOut 3.5s ease-in-out infinite 0.7s"}}/>
-                <div style={{position:"absolute",inset:-4,borderRadius:"50%",background:`radial-gradient(circle,${mc.sun}2e 0%,${mc.point}14 40%,transparent 70%)`,animation:"crystalPulse 3s ease-in-out infinite"}}/>
-                <span style={{fontSize:88,lineHeight:1,position:"relative",zIndex:2,animation:"float 5s ease-in-out infinite",filter:`drop-shadow(0 0 18px ${mc.point}99) drop-shadow(0 0 36px ${mc.sun}4d)`}}>🔮</span>
-              </div>
-            </div>
 
             {/* KarmaMap 타이틀 — 먹색 + 포인트 컬러 테두리 */}
             <h1 style={{fontSize:"clamp(50px,12vw,78px)",fontWeight:900,lineHeight:1.0,marginBottom:6,letterSpacing:"4px",fontFamily:"'Noto Serif KR',serif",color:"#2d1810",textShadow:`1px 2px 0 rgba(45,24,16,0.18),0 0 40px ${mc.point}1e`,WebkitTextStroke:`0.8px ${mc.point}`}}>
@@ -955,7 +834,7 @@ Be specific and strategic. No vague answers. Real career moves tied to timing wi
                 {t.tagline2}
               </p>
             )}
-            <p style={{fontSize:13,color:"rgba(45,24,16,0.58)",marginBottom:t.microCopy?10:30,lineHeight:1.7,maxWidth:380,margin:t.microCopy?"0 auto 10px":"0 auto 30px",fontFamily:"'Noto Serif KR',serif"}}>
+            <p style={{fontSize:13,color:"rgba(45,24,16,0.8)",marginBottom:t.microCopy?10:30,lineHeight:1.7,maxWidth:380,margin:t.microCopy?"0 auto 10px":"0 auto 30px",fontFamily:"'Noto Serif KR',serif"}}>
               {t.subtitle}
             </p>
             {t.microCopy && (
@@ -976,9 +855,9 @@ Be specific and strategic. No vague answers. Real career moves tied to timing wi
             {/* CTA 버튼 */}
             <button
               onClick={()=>{setStep("form");setFormStep(1);}}
-              style={{background:mc.btn,border:`2px solid ${mc.point}`,color:"#f5e6c8",padding:"16px 52px",borderRadius:4,fontSize:17,fontWeight:700,cursor:"pointer",fontFamily:"'Noto Serif KR',serif",letterSpacing:2,boxShadow:`0 4px 24px ${mc.sun}61,inset 0 1px 0 ${mc.point}4d`,transition:"all 0.25s",animation:"glow 2.5s ease-in-out infinite"}}
-              onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.05)";e.currentTarget.style.boxShadow=`0 6px 40px ${mc.sun}99,0 0 0 2px ${mc.point},inset 0 1px 0 ${mc.point}66`;}}
-              onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow=`0 4px 24px ${mc.sun}61,inset 0 1px 0 ${mc.point}4d`;}}
+              style={{background:"#c84b2f",border:"2px solid #d4a017",color:"#f5e6c8",padding:"16px 52px",borderRadius:4,fontSize:17,fontWeight:700,cursor:"pointer",fontFamily:"'Noto Serif KR',serif",letterSpacing:2,boxShadow:"0 4px 24px rgba(200,75,47,0.45),inset 0 1px 0 rgba(212,160,23,0.3)",transition:"all 0.25s",animation:"glow 2.5s ease-in-out infinite"}}
+              onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.05)";e.currentTarget.style.boxShadow="0 6px 40px rgba(200,75,47,0.65),0 0 0 2px #d4a017";}}
+              onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="0 4px 24px rgba(200,75,47,0.45),inset 0 1px 0 rgba(212,160,23,0.3)";}}
             >
               {t.startBtn}
             </button>
