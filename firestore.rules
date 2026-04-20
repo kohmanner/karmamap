@@ -1,0 +1,19 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /comments/{commentId} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasAll(['name','peak_year','score_2026','goal','lang','reactions','created_at'])
+                   && request.resource.data.name is string
+                   && request.resource.data.name.size() <= 50
+                   && request.resource.data.comment is string
+                   && request.resource.data.comment.size() <= 300
+                   && request.resource.data.lang in ['en','ko','zh','ms','in'];
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reactions']);
+    }
+    match /ip_limits/{ipHash} {
+      allow read, write: if true;
+    }
+  }
+}
