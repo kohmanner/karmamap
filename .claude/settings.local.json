@@ -12,7 +12,8 @@
       "Bash(firebase firestore:databases:create *)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(git rm *)"
     ]
   }
 }
