@@ -4,7 +4,15 @@
       "Bash(npx kill-port *)",
       "Bash(npm start *)",
       "Bash(npm run *)",
-      "Bash(firebase deploy *)"
+      "Bash(firebase deploy *)",
+      "Bash(git stash *)",
+      "Bash(git checkout *)",
+      "Bash(firebase functions:config:set *)",
+      "Bash(firebase firestore:databases:list *)",
+      "Bash(firebase firestore:databases:create *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }

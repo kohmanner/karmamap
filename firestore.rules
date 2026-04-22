@@ -2,18 +2,41 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+
     match /comments/{commentId} {
       allow read: if true;
       allow create: if request.resource.data.keys().hasAll(['name','peak_year','score_2026','goal','lang','reactions','created_at'])
                    && request.resource.data.name is string
                    && request.resource.data.name.size() <= 50
                    && request.resource.data.comment is string
-                   && request.resource.data.comment.size() <= 300
-                   && request.resource.data.lang in ['en','ko','zh','ms','in'];
+                   && request.resource.data.comment.size() <= 300;
       allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reactions']);
     }
+
     match /ip_limits/{ipHash} {
       allow read, write: if true;
+    }
+
+    match /referrals/{refCode} {
+      // Anyone can create a referral (sharer registers their email)
+      allow create: if request.resource.data.keys().hasAll(['email','lang','createdAt','completed','pdfSent'])
+                   && request.resource.data.email is string
+                   && request.resource.data.email.size() <= 200
+                   && request.resource.data.completed == false
+                   && request.resource.data.pdfSent == false;
+      // Only allow setting completed = true (friend finished reading)
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['completed','completedAt'])
+                   && request.resource.data.completed == true;
+      // No public read (Cloud Function uses Admin SDK)
+      allow read: if false;
+    }
+
+    match /referral_events/{eventId} {
+      // Anyone can log a visit/completion event
+      allow create: if request.resource.data.keys().hasAll(['refCode','visitorId','lang','visitedAt'])
+                   && request.resource.data.refCode is string
+                   && request.resource.data.refCode.size() <= 16;
+      allow read, update, delete: if false;
     }
   }
 }

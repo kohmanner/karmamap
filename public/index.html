@@ -3,41 +3,56 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="theme-color" content="#2d1810" />
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+    <!-- Primary SEO -->
+    <title>KarmaMap – AI Fortune & Career Strategy | Free Reading</title>
+    <meta name="description" content="Get your free AI-powered fortune and career reading. KarmaMap cross-analyzes 사주팔자, Numerology, Western Astrology, Vedic Jyotish, and Zi Wei Dou Shu to reveal your 2026 career score, peak years, and 30/90-day action plan." />
+    <meta name="keywords" content="fortune reading, career strategy, 사주팔자, numerology, astrology, vedic jyotish, zi wei dou shu, AI fortune, career peak year, 2026 fortune" />
+    <link rel="canonical" href="https://karmamap-dd922.web.app/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://karmamap-dd922.web.app/" />
+    <meta property="og:title" content="KarmaMap – AI Fortune & Career Strategy" />
+    <meta property="og:description" content="Free AI reading: 사주팔자 + Numerology + Astrology cross-analysis. Discover your 2026 career score, peak years, and 90-day action plan." />
+    <meta property="og:image" content="https://karmamap-dd922.web.app/images/landing-bg.png" />
+    <meta property="og:site_name" content="KarmaMap" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="KarmaMap – AI Fortune & Career Strategy" />
+    <meta name="twitter:description" content="Free AI reading: 사주팔자 + Numerology + Astrology. Find your 2026 career peak year." />
+    <meta name="twitter:image" content="https://karmamap-dd922.web.app/images/landing-bg.png" />
+
+    <!-- Performance: preload above-fold background -->
+    <link rel="preload" href="%PUBLIC_URL%/images/landing-bg.png" as="image" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KRLKZB4LVF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KRLKZB4LVF');
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2448306889621853"
+     crossorigin="anonymous"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>

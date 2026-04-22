@@ -106,6 +106,13 @@ export default function AIHandoffSection({ result, form, lang, theme, primaryCol
 
   return (
     <div style={{ marginTop: 36, marginBottom: 8, background: cardBg, border: `1px solid ${border}`, borderRadius: 18, padding: "22px 18px", fontFamily: fn }}>
+      <style>{`
+        @media(max-width:480px){
+          .aih-platforms{display:grid!important;grid-template-columns:1fr 1fr!important;}
+          .aih-prompt{max-height:180px!important;}
+          .aih-copy{width:100%!important;}
+        }
+      `}</style>
 
       {/* Header */}
       <div style={{ marginBottom: 18 }}>
@@ -129,7 +136,7 @@ export default function AIHandoffSection({ result, form, lang, theme, primaryCol
       )}
 
       {/* Platform tabs */}
-      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 14 }}>
+      <div className="aih-platforms" style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 14 }}>
         {PLATFORMS.map(pl => (
           <button key={pl.id} style={platform === pl.id ? TAB_ACTIVE : TAB_INACTIVE} onClick={() => setPlatform(pl.id)}>
             {pl.label}
@@ -158,6 +165,7 @@ export default function AIHandoffSection({ result, form, lang, theme, primaryCol
           <textarea
             readOnly
             value={promptText}
+            className="aih-prompt"
             style={{ width: "100%", boxSizing: "border-box", background: "rgba(0,0,0,0.25)", border: `1px solid ${border}`, borderRadius: 10, padding: "12px 14px", fontSize: 12, fontFamily: "monospace", color: text, lineHeight: 1.55, resize: "none", maxHeight: 200, minHeight: 100, overflowY: "auto", outline: "none", userSelect: "text" }}
             onFocus={e => e.target.select()}
           />
@@ -170,6 +178,7 @@ export default function AIHandoffSection({ result, form, lang, theme, primaryCol
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
         <button
           onClick={handleCopy}
+          className="aih-copy"
           style={{ flex: 1, minWidth: 140, background: copyState === "copied" ? "#22c55e22" : `${p}22`, border: `1px solid ${copyState === "copied" ? "#22c55e" : p}`, borderRadius: 10, padding: "11px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer", color: copyState === "copied" ? "#22c55e" : p, fontFamily: fn, transition: "all 0.2s" }}
         >
           {copyState === "copied" ? lc.copied : copyState === "fail" ? lc.copyFail : lc.copy}

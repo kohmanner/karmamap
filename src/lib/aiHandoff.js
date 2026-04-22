@@ -6,6 +6,19 @@ const f = (val, fallback = '') =>
 const fList = (arr, fallback = '') =>
   Array.isArray(arr) && arr.length > 0 ? arr.join(', ') : fallback;
 
+// 마크다운 기호 제거
+const cleanText = (text) => {
+  if (!text) return '';
+  return text
+    .replace(/#{1,6}\s/g, '')
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/^\s*[\*\-]\s/gm, '• ')
+    .replace(/---/g, '──────')
+    .replace(/🔮|💼|⚡|📍|🤖/g, '')
+    .trim();
+};
+
 // goal 분류
 const detectGoalType = (goal = '') => {
   const g = goal.toLowerCase();
@@ -38,6 +51,7 @@ export const buildShortPromptEN = (state) => {
   return `I received a KarmaMap destiny & career reading.
 
 My profile:
+${form.name ? `- My name: ${form.name}` : ''}
 ${form.dob ? `- Date of birth: ${form.dob}` : ''}
 ${form.city ? `- Birth city: ${form.city}` : ''}
 ${form.job ? `- Job: ${form.job}` : ''}
@@ -53,7 +67,7 @@ ${defendQ ? `- Defend window: ${defendQ}` : ''}
 
 My full reading:
 ---
-${result.slice(0, 1800)}
+${cleanText(result).slice(0, 1800)}
 ---
 
 Use this as strategic context only. Do NOT re-summarize it.
@@ -75,6 +89,7 @@ export const buildShortPromptKO = (state) => {
   return `나는 KarmaMap 운명 & 커리어 리포트를 받았다.
 
 내 프로필:
+${form.name ? `- 이름: ${form.name}` : ''}
 ${form.dob ? `- 생년월일: ${form.dob}` : ''}
 ${form.city ? `- 출생지: ${form.city}` : ''}
 ${form.job ? `- 직업: ${form.job}` : ''}
@@ -90,7 +105,7 @@ ${defendQ ? `- 방어 구간: ${defendQ}` : ''}
 
 내 전체 리포트:
 ---
-${result.slice(0, 1800)}
+${cleanText(result).slice(0, 1800)}
 ---
 
 이 결과를 전략적 맥락으로만 써줘. 다시 요약하지 마.
@@ -112,6 +127,7 @@ export const buildFullPromptEN = (state) => {
   return `I received a KarmaMap destiny & career reading and want to turn it into a concrete action plan.
 
 My profile:
+${form.name ? `- My name: ${form.name}` : ''}
 ${form.dob ? `- Date of birth: ${form.dob}` : ''}
 ${form.time ? `- Birth time: ${form.time}` : ''}
 ${form.city ? `- Birth city: ${form.city}` : ''}
@@ -128,7 +144,7 @@ ${defendQ ? `- Defend window: ${defendQ}` : ''}
 
 Full reading:
 ---
-${result}
+${cleanText(result)}
 ---
 
 Use this reading as strategic context only.
@@ -155,6 +171,7 @@ export const buildFullPromptKO = (state) => {
   return `나는 KarmaMap 운명 & 커리어 리포트를 받았다. 이걸 구체적인 실행계획으로 바꿔줘.
 
 내 프로필:
+${form.name ? `- 이름: ${form.name}` : ''}
 ${form.dob ? `- 생년월일: ${form.dob}` : ''}
 ${form.time ? `- 태어난 시간: ${form.time}` : ''}
 ${form.city ? `- 출생지: ${form.city}` : ''}
@@ -171,7 +188,7 @@ ${defendQ ? `- 방어 구간: ${defendQ}` : ''}
 
 전체 리포트:
 ---
-${result}
+${cleanText(result)}
 ---
 
 이 리포트를 전략 맥락으로만 사용해줘.
