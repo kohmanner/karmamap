@@ -1426,25 +1426,6 @@ JSON key는 영어 유지, value는 ${lang} 언어로.`;
                   {/* ── ALWAYS BOTTOM ── */}
                   <AIHandoffSection result={result} form={form} lang={lang} theme={theme} primaryColor={p}/>
 
-                  {/* AI Chat */}
-                  <div style={{marginTop:24}}>
-                    <h3 style={{fontSize:16,fontWeight:700,color:"#2d1810",fontFamily:"'Cinzel',serif",borderBottom:"1px solid rgba(139,105,20,0.3)",paddingBottom:8,margin:"32px 0 16px",letterSpacing:0.5}}>◈ AI Chat</h3>
-                    <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:14,maxHeight:"52vh",overflowY:"auto",paddingRight:4}}>
-                      {chatMessages.map((msg,i)=>(
-                        <div key={i} className={msg.role==="ai"?"chat-ai":"chat-user"}>
-                          {msg.role==="ai"&&<span style={{fontSize:10,color:"#8b6914",fontWeight:700,display:"block",marginBottom:4,fontFamily:"'Cormorant Garamond',serif",letterSpacing:0.5}}>◈ KarmaMap AI</span>}
-                          {msg.text}
-                        </div>
-                      ))}
-                      {chatLoading&&<div className="chat-ai"><span style={{color:theme.muted}}>...</span></div>}
-                      <div ref={chatEndRef}/>
-                    </div>
-                    <div style={{display:"flex",gap:8}}>
-                      <input className="input-field" style={{flex:1,padding:"12px 14px"}} placeholder={t.chatPlaceholder} value={chatInput} onChange={e=>setChatInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleChat()}/>
-                      <button className="cta-btn" style={{padding:"12px 20px",fontSize:14,animation:"none"}} onClick={handleChat}>{t.sendBtn}</button>
-                    </div>
-                  </div>
-
                   {/* Share Card */}
                   <div style={{marginTop:24,background:"rgba(252,248,240,0.95)",border:"1px solid rgba(212,160,23,0.3)",borderRadius:8,padding:"20px 24px"}}>
                     <h3 style={{fontSize:15,fontWeight:700,color:"#2d1810",fontFamily:"'Cinzel',serif",margin:"0 0 8px"}}>
